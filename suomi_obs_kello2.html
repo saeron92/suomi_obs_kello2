@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="fi">
 
 <head>
@@ -8,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Suomi OBS -kello</title>
-
 
 <!-- ORBITRON FONT -->
 
@@ -20,7 +20,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&display=swap"
       rel="stylesheet">
-
 
 <style>
 
@@ -129,6 +128,12 @@ body {
 
   transform-origin: center;
 
+  /*
+     Ainoa muuttunut kohta:
+     rauhallinen fade-heartbeat.
+     Kaksoispiste ei liiku eikä muuta kokoaan.
+  */
+
   text-shadow:
 
     0 0 6px rgba(180,120,255,.75),
@@ -137,33 +142,19 @@ body {
 
     0 0 28px rgba(140,90,255,.25);
 
-  animation: heartbeat 1.15s infinite;
+  animation: heartbeat 1.4s ease-in-out infinite;
 }
 
 
 /* ==============================
-   REALISTINEN HEARTBEAT
+   RAUHALLINEN HEARTBEAT
    ============================== */
-
-/*
-   PUM
-   pum
-   ---- tauko ----
-   PUM
-   pum
-   ---- tauko ----
-*/
 
 @keyframes heartbeat {
 
-
-  /* Lepotila */
-
   0% {
 
-    transform: scale(1);
-
-    opacity: .82;
+    opacity: 1;
 
     text-shadow:
 
@@ -175,87 +166,70 @@ body {
   }
 
 
-  /* ENSIMMÄINEN ISKU */
+  /* Ensimmäinen pieni fade */
 
   8% {
 
-    transform: scale(1.32);
-
-    opacity: 1;
+    opacity: .35;
 
     text-shadow:
 
-      0 0 8px rgba(200,150,255,1),
+      0 0 3px rgba(180,120,255,.35),
 
-      0 0 20px rgba(180,120,255,.9),
-
-      0 0 38px rgba(140,90,255,.65);
+      0 0 8px rgba(180,120,255,.2);
   }
 
 
-  /* Nopea palautuminen */
+  /* Palautuu */
 
-  14% {
+  16% {
 
-    transform: scale(.98);
+    opacity: .9;
+
+    text-shadow:
+
+      0 0 6px rgba(180,120,255,.7),
+
+      0 0 14px rgba(180,120,255,.4),
+
+      0 0 26px rgba(140,90,255,.25);
+  }
+
+
+  /* Toinen pieni fade */
+
+  25% {
+
+    opacity: .45;
+
+    text-shadow:
+
+      0 0 4px rgba(180,120,255,.4),
+
+      0 0 9px rgba(180,120,255,.25);
+  }
+
+
+  /* Palautuu normaaliksi */
+
+  38% {
 
     opacity: .85;
-  }
-
-
-  /* Lyhyt tauko */
-
-  18% {
-
-    transform: scale(1);
-
-    opacity: .82;
-  }
-
-
-  /* TOINEN ISKU */
-
-  23% {
-
-    transform: scale(1.18);
-
-    opacity: 1;
 
     text-shadow:
 
-      0 0 8px rgba(200,150,255,.95),
+      0 0 6px rgba(180,120,255,.65),
 
-      0 0 18px rgba(180,120,255,.75),
-
-      0 0 32px rgba(140,90,255,.5);
+      0 0 13px rgba(180,120,255,.4);
   }
 
 
-  /* Palautuminen */
+  /* Rauhallinen loppu */
 
-  31% {
-
-    transform: scale(1);
-
-    opacity: .82;
-
-    text-shadow:
-
-      0 0 6px rgba(180,120,255,.75),
-
-      0 0 14px rgba(180,120,255,.45),
-
-      0 0 28px rgba(140,90,255,.25);
-  }
-
-
-  /* PITKÄ TAUKO */
-
+  55%,
   100% {
 
-    transform: scale(1);
-
-    opacity: .82;
+    opacity: 1;
 
     text-shadow:
 
@@ -296,7 +270,6 @@ body {
     0 5px 12px rgba(0,0,0,.7),
 
     0 0 10px rgba(180,120,255,.4);
-
 }
 
 
@@ -382,9 +355,7 @@ body {
 
 </head>
 
-
 <body>
-
 
 <!-- ==============================
      KELLO
@@ -392,26 +363,24 @@ body {
 
 <div class="clock">
 
-
   <div class="time">
 
-    <span class="hours"
-          id="hours"></span>
+```
+<span class="hours"
+      id="hours"></span>
 
-    <span class="colon">:</span>
+<span class="colon">:</span>
 
-    <span class="minutes"
-          id="minutes"></span>
+<span class="minutes"
+      id="minutes"></span>
+```
 
   </div>
-
 
   <div class="date"
        id="date"></div>
 
-
 </div>
-
 
 <script>
 
@@ -548,7 +517,6 @@ setInterval(
 );
 
 </script>
-
 
 </body>
 

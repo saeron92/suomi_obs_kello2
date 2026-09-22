@@ -1,30 +1,228 @@
+```html
 <!doctype html>
 <html lang="fi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Suomi OBS -kello</title>
+
 <style>
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}
-body{display:flex;align-items:center;justify-content:center;font-family:Inter,Arial,Helvetica,sans-serif;color:white}
-.clock{text-align:center;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.75)}
-.date{font-size:30px;font-weight:700;letter-spacing:1.5px;margin-top:12px}
-.time{font-size:72px;font-weight:700;letter-spacing:2px;font-variant-numeric:tabular-nums}
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: white;
+
+  /* Käynnistysanimaatio */
+  animation: pageIn 0.8s ease-out both;
+}
+
+.clock {
+  text-align: center;
+  line-height: 1;
+
+  /* Monikerroksinen varjo */
+  filter:
+    drop-shadow(0 2px 2px rgba(0,0,0,.85))
+    drop-shadow(0 6px 12px rgba(0,0,0,.65))
+    drop-shadow(0 12px 28px rgba(0,0,0,.45));
+
+  /* Hieno jatkuva glow */
+  animation: clockGlow 4s ease-in-out infinite;
+}
+
+/* =========================
+   KELLO
+   ========================= */
+
+.time {
+  font-size: 72px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+
+  /* Tekstin oma varjo */
+  text-shadow:
+    0 2px 2px rgba(0,0,0,.9),
+    0 4px 10px rgba(0,0,0,.75),
+    0 0 18px rgba(255,255,255,.12);
+
+  /* Pehmeä siirtymä */
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+/* =========================
+   PÄIVÄMÄÄRÄ
+   ========================= */
+
+.date {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-top: 12px;
+
+  opacity: .95;
+
+  text-shadow:
+    0 2px 3px rgba(0,0,0,.9),
+    0 5px 12px rgba(0,0,0,.65);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* =========================
+   ANIMAATIOT
+   ========================= */
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes clockGlow {
+  0%, 100% {
+    filter:
+      drop-shadow(0 2px 2px rgba(0,0,0,.85))
+      drop-shadow(0 6px 12px rgba(0,0,0,.65))
+      drop-shadow(0 12px 28px rgba(0,0,0,.45));
+  }
+
+  50% {
+    filter:
+      drop-shadow(0 2px 2px rgba(0,0,0,.85))
+      drop-shadow(0 7px 15px rgba(0,0,0,.7))
+      drop-shadow(0 14px 32px rgba(0,0,0,.5));
+  }
+}
+
+/* Kellon numeron vaihtuminen */
+.time.tick {
+  animation: tick 0.22s ease-out;
+}
+
+@keyframes tick {
+  0% {
+    opacity: .55;
+    transform: translateY(-2px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   PIENEMMÄT NÄYTÖT
+   ========================= */
+
+@media (max-width: 600px) {
+  .time {
+    font-size: 56px;
+  }
+
+  .date {
+    font-size: 22px;
+  }
+}
 </style>
 </head>
+
 <body>
-<div class="clock"><div class="time" id="time"></div><div class="date" id="date"></div></div>
+
+<div class="clock">
+  <div class="time" id="time"></div>
+  <div class="date" id="date"></div>
+</div>
+
 <script>
-const dateEl=document.getElementById('date'),timeEl=document.getElementById('time');
-const pad=n=>String(n).padStart(2,'0');
-const weekdays={Monday:'MAANANTAI',Tuesday:'TIISTAI',Wednesday:'KESKIVIIKKO',Thursday:'TORSTAI',Friday:'PERJANTAI',Saturday:'LAUANTAI',Sunday:'SUNNUNTAI'};
-function updateClock(){
-  const a=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Helsinki',weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
-  const p={}; for(const x of a)p[x.type]=x.value;
-  dateEl.textContent=`${weekdays[p.weekday]} ${p.day}.${p.month}.${p.year}`;
-  timeEl.textContent=`${pad(p.hour)}:${pad(p.minute)}`;
+
+const dateEl = document.getElementById('date');
+const timeEl = document.getElementById('time');
+
+const pad = n => String(n).padStart(2, '0');
+
+const weekdays = {
+  Monday: 'MAANANTAI',
+  Tuesday: 'TIISTAI',
+  Wednesday: 'KESKIVIIKKO',
+  Thursday: 'TORSTAI',
+  Friday: 'PERJANTAI',
+  Saturday: 'LAUANTAI',
+  Sunday: 'SUNNUNTAI'
+};
+
+let previousTime = '';
+
+function updateClock() {
+
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Helsinki',
+    weekday: 'long',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23'
+  }).formatToParts(new Date());
+
+  const p = {};
+
+  for (const x of parts) {
+    p[x.type] = x.value;
+  }
+
+  const currentTime = `${pad(p.hour)}:${pad(p.minute)}`;
+
+  dateEl.textContent =
+    `${weekdays[p.weekday]} ${p.day}.${p.month}.${p.year}`;
+
+  timeEl.textContent = currentTime;
+
+  /* Animoidaan vain kun minuutti vaihtuu */
+  if (currentTime !== previousTime) {
+
+    timeEl.classList.remove('tick');
+
+    /* Pakotetaan selaimen uudelleenrenderöinti */
+    void timeEl.offsetWidth;
+
+    timeEl.classList.add('tick');
+
+    previousTime = currentTime;
+  }
 }
-updateClock();setInterval(updateClock,250);
+
+updateClock();
+
+/* Päivitetään 250 ms välein */
+setInterval(updateClock, 250);
+
 </script>
+
 </body>
 </html>
+```

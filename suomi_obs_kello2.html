@@ -1,44 +1,71 @@
 <!doctype html>
 <html lang="fi">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Suomi OBS -kello</title>
 
-<!-- Orbitron -->
+
+<!-- ORBITRON FONT -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&display=swap"
+      rel="stylesheet">
+
 
 <style>
 
+/* ==============================
+   PERUSASETUKSET
+   ============================== */
+
 html,
 body {
+
   margin: 0;
+
   width: 100%;
   height: 100%;
+
   overflow: hidden;
+
   background: transparent;
 }
 
+
 body {
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   font-family: 'Orbitron', sans-serif;
+
   color: white;
 
   animation: pageIn .8s ease-out both;
 }
 
 
-/* =========================
+/* ==============================
    KELLO
-   ========================= */
+   ============================== */
 
 .clock {
+
   text-align: center;
+
   line-height: 1;
 
   filter:
@@ -49,245 +76,480 @@ body {
 }
 
 
-/* =========================
+/* ==============================
    AIKA
-   ========================= */
+   ============================== */
 
 .time {
+
   font-family: 'Orbitron', sans-serif;
 
   font-size: 76px;
+
   font-weight: 700;
 
   letter-spacing: 3px;
 
   font-variant-numeric: tabular-nums;
 
-  /* Sinertävä pääväri */
-  color: #8fe7ff;
-
-  text-shadow:
-    0 2px 2px rgba(0,0,0,.95),
-    0 4px 10px rgba(0,0,0,.85),
-    0 0 8px rgba(80,210,255,.8),
-    0 0 22px rgba(80,210,255,.45);
-
-  transition:
-    opacity .2s ease,
-    transform .2s ease;
+  white-space: nowrap;
 }
 
 
-/* =========================
+/* ==============================
+   TUNNIT JA MINUUTIT
+   ============================== */
+
+.hours,
+.minutes {
+
+  color: #8fe7ff;
+
+  text-shadow:
+
+    0 2px 2px rgba(0,0,0,.95),
+
+    0 4px 10px rgba(0,0,0,.85),
+
+    0 0 8px rgba(80,210,255,.8),
+
+    0 0 22px rgba(80,210,255,.45);
+}
+
+
+/* ==============================
+   KAKSOISPISTE
+   ============================== */
+
+.colon {
+
+  display: inline-block;
+
+  color: #d5b8ff;
+
+  transform-origin: center;
+
+  text-shadow:
+
+    0 0 6px rgba(180,120,255,.75),
+
+    0 0 14px rgba(180,120,255,.45),
+
+    0 0 28px rgba(140,90,255,.25);
+
+  animation: heartbeat 1.15s infinite;
+}
+
+
+/* ==============================
+   REALISTINEN HEARTBEAT
+   ============================== */
+
+/*
+   PUM
+   pum
+   ---- tauko ----
+   PUM
+   pum
+   ---- tauko ----
+*/
+
+@keyframes heartbeat {
+
+
+  /* Lepotila */
+
+  0% {
+
+    transform: scale(1);
+
+    opacity: .82;
+
+    text-shadow:
+
+      0 0 6px rgba(180,120,255,.75),
+
+      0 0 14px rgba(180,120,255,.45),
+
+      0 0 28px rgba(140,90,255,.25);
+  }
+
+
+  /* ENSIMMÄINEN ISKU */
+
+  8% {
+
+    transform: scale(1.32);
+
+    opacity: 1;
+
+    text-shadow:
+
+      0 0 8px rgba(200,150,255,1),
+
+      0 0 20px rgba(180,120,255,.9),
+
+      0 0 38px rgba(140,90,255,.65);
+  }
+
+
+  /* Nopea palautuminen */
+
+  14% {
+
+    transform: scale(.98);
+
+    opacity: .85;
+  }
+
+
+  /* Lyhyt tauko */
+
+  18% {
+
+    transform: scale(1);
+
+    opacity: .82;
+  }
+
+
+  /* TOINEN ISKU */
+
+  23% {
+
+    transform: scale(1.18);
+
+    opacity: 1;
+
+    text-shadow:
+
+      0 0 8px rgba(200,150,255,.95),
+
+      0 0 18px rgba(180,120,255,.75),
+
+      0 0 32px rgba(140,90,255,.5);
+  }
+
+
+  /* Palautuminen */
+
+  31% {
+
+    transform: scale(1);
+
+    opacity: .82;
+
+    text-shadow:
+
+      0 0 6px rgba(180,120,255,.75),
+
+      0 0 14px rgba(180,120,255,.45),
+
+      0 0 28px rgba(140,90,255,.25);
+  }
+
+
+  /* PITKÄ TAUKO */
+
+  100% {
+
+    transform: scale(1);
+
+    opacity: .82;
+
+    text-shadow:
+
+      0 0 6px rgba(180,120,255,.75),
+
+      0 0 14px rgba(180,120,255,.45),
+
+      0 0 28px rgba(140,90,255,.25);
+  }
+
+}
+
+
+/* ==============================
    PÄIVÄMÄÄRÄ
-   ========================= */
+   ============================== */
 
 .date {
+
   margin-top: 14px;
 
   font-family: 'Orbitron', sans-serif;
 
   font-size: 27px;
+
   font-weight: 600;
 
   letter-spacing: 2px;
 
-  /* Violetti/syaani */
   color: #d5b8ff;
 
   opacity: .95;
 
   text-shadow:
+
     0 2px 3px rgba(0,0,0,.95),
+
     0 5px 12px rgba(0,0,0,.7),
+
     0 0 10px rgba(180,120,255,.4);
 
-  transition:
-    opacity .3s ease,
-    transform .3s ease;
 }
 
 
-/* =========================
-   KELLON TIKKAUS
-   ========================= */
-
-.time.tick {
-  animation: tick .22s ease-out;
-}
-
-@keyframes tick {
-
-  0% {
-    opacity: .55;
-    transform: translateY(-3px) scale(.99);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-}
-
-
-/* =========================
-   HENTO GLOW
-   ========================= */
+/* ==============================
+   KOKO KELLON HENTO GLOW
+   ============================== */
 
 @keyframes glow {
 
   0%,
   100% {
+
     filter:
+
       drop-shadow(0 3px 3px rgba(0,0,0,.9))
+
       drop-shadow(0 8px 18px rgba(0,0,0,.75));
   }
 
+
   50% {
+
     filter:
+
       drop-shadow(0 3px 3px rgba(0,0,0,.9))
+
       drop-shadow(0 8px 22px rgba(0,0,0,.8))
+
       drop-shadow(0 0 8px rgba(80,210,255,.15));
   }
 
 }
 
 
-/* =========================
-   KÄYNNISTYS
-   ========================= */
+/* ==============================
+   KÄYNNISTYSANIMAATIO
+   ============================== */
 
 @keyframes pageIn {
 
   from {
+
     opacity: 0;
-    transform: translateY(8px) scale(.97);
+
+    transform:
+      translateY(8px)
+      scale(.97);
   }
 
+
   to {
+
     opacity: 1;
-    transform: translateY(0) scale(1);
+
+    transform:
+      translateY(0)
+      scale(1);
   }
 
 }
 
 
-/* =========================
-   PIENEMPI NÄYTTÖ
-   ========================= */
+/* ==============================
+   PIENEMMÄT NÄYTÖT
+   ============================== */
 
 @media (max-width: 600px) {
 
   .time {
+
     font-size: 56px;
   }
 
+
   .date {
+
     font-size: 21px;
   }
 
 }
 
 </style>
+
 </head>
 
 
 <body>
 
+
+<!-- ==============================
+     KELLO
+     ============================== -->
+
 <div class="clock">
 
-  <div class="time" id="time"></div>
 
-  <div class="date" id="date"></div>
+  <div class="time">
+
+    <span class="hours"
+          id="hours"></span>
+
+    <span class="colon">:</span>
+
+    <span class="minutes"
+          id="minutes"></span>
+
+  </div>
+
+
+  <div class="date"
+       id="date"></div>
+
 
 </div>
 
 
 <script>
 
-const dateEl = document.getElementById('date');
-const timeEl = document.getElementById('time');
+/* ==============================
+   ELEMENTIT
+   ============================== */
 
-const pad = n => String(n).padStart(2, '0');
+const hoursEl =
+  document.getElementById('hours');
 
+const minutesEl =
+  document.getElementById('minutes');
+
+const dateEl =
+  document.getElementById('date');
+
+
+/* ==============================
+   APUFUNKTIOT
+   ============================== */
+
+const pad =
+  n => String(n).padStart(2, '0');
+
+
+/* ==============================
+   VIIKONPÄIVÄT
+   ============================== */
 
 const weekdays = {
+
   Monday: 'MAANANTAI',
+
   Tuesday: 'TIISTAI',
+
   Wednesday: 'KESKIVIIKKO',
+
   Thursday: 'TORSTAI',
+
   Friday: 'PERJANTAI',
+
   Saturday: 'LAUANTAI',
+
   Sunday: 'SUNNUNTAI'
+
 };
 
 
-let previousTime = '';
-
+/* ==============================
+   KELLON PÄIVITYS
+   ============================== */
 
 function updateClock() {
 
-  const parts = new Intl.DateTimeFormat('en-GB', {
 
-    timeZone: 'Europe/Helsinki',
+  const parts =
+    new Intl.DateTimeFormat(
+      'en-GB',
+      {
 
-    weekday: 'long',
+        timeZone:
+          'Europe/Helsinki',
 
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
+        weekday:
+          'long',
 
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
+        day:
+          '2-digit',
 
-    hourCycle: 'h23'
+        month:
+          '2-digit',
 
-  }).formatToParts(new Date());
+        year:
+          'numeric',
+
+        hour:
+          '2-digit',
+
+        minute:
+          '2-digit',
+
+        second:
+          '2-digit',
+
+        hourCycle:
+          'h23'
+
+      }
+    ).formatToParts(new Date());
 
 
   const p = {};
 
+
   for (const x of parts) {
+
     p[x.type] = x.value;
+
   }
 
 
-  const currentTime =
-    `${pad(p.hour)}:${pad(p.minute)}`;
+  /* Tunnit */
 
+  hoursEl.textContent =
+    pad(p.hour);
+
+
+  /* Minuutit */
+
+  minutesEl.textContent =
+    pad(p.minute);
+
+
+  /* Päivämäärä */
 
   dateEl.textContent =
     `${weekdays[p.weekday]} ${p.day}.${p.month}.${p.year}`;
 
-
-  timeEl.textContent =
-    currentTime;
-
-
-  /* Animaatio vain kun aika muuttuu */
-
-  if (currentTime !== previousTime) {
-
-    timeEl.classList.remove('tick');
-
-    void timeEl.offsetWidth;
-
-    timeEl.classList.add('tick');
-
-    previousTime = currentTime;
-
-  }
-
 }
 
 
+/* ==============================
+   KÄYNNISTYS
+   ============================== */
+
 updateClock();
 
-setInterval(updateClock, 250);
+
+/* Päivitetään 250 ms välein */
+
+setInterval(
+  updateClock,
+  250
+);
 
 </script>
 
+
 </body>
+
 </html>
